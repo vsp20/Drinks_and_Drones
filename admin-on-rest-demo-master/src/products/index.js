@@ -25,6 +25,7 @@ import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import StarRatingField from '../reviews/StarRatingField';
 import GridList from './GridList';
 import Poster from './Poster';
+import items from './items';
 
 export const ProductIcon = Icon;
 
@@ -49,6 +50,10 @@ export const ProductList = props => (
         <GridList />
     </List>
 );
+
+// export const ItemList = props => (
+
+//     );
 
 export const ProductCreate = (props) => (
     <Create {...props}>

@@ -54,6 +54,10 @@ function getColorsFromTheme(theme) {
     return { primary1Color, accent1Color };
 }
 
+function handleSubmitButton(){
+    alert('submit handled')
+}
+
 // see http://redux-form.com/6.4.3/examples/material-ui/
 const renderInput = ({ meta: { touched, error } = {}, input: { ...inputProps }, ...props }) =>
     <TextField
@@ -68,6 +72,16 @@ class Login extends Component {
     login = ({ username, password }) => {
         const { userLogin, location } = this.props;
         userLogin({ username, password }, location.state ? location.state.nextPathname : '/');
+    }
+
+    handleSubmitButton(){
+        //add implementation for login check here
+        alert('handled submit');
+
+    }
+    handleCreateAccountClick(){
+        //add implementation for POST here
+        alert('handled create account')
     }
 
     render() {
@@ -102,6 +116,7 @@ class Login extends Component {
                             </div>
                             <CardActions>
                                 <RaisedButton type="submit" primary disabled={submitting} label={translate('aor.auth.sign_in')} fullWidth />
+                                <RaisedButton onClick={this.handleCreateAccountClick} type="button" primary disabled={submitting} label="Create an account" fullWidth/>
                             </CardActions>
                         </form>
                     </Card>

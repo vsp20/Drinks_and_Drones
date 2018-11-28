@@ -1,10 +1,16 @@
 import React from 'react';
 import { GridList as MuiGridList, GridTile } from 'material-ui/GridList';
 import { NumberField, EditButton } from 'admin-on-rest';
+import './gridListStyles.css';
+import coffee from './coffee.png';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Card, CardActions } from 'material-ui/Card';
+import { Button } from 'react-bootstrap';
 
 const styles = {
     root: {
         margin: '-2px',
+        padding:'10px',
     },
     gridList: {
         width: '100%',
@@ -12,21 +18,32 @@ const styles = {
     },
 };
 
+// For add to cart, every time Add to cart is clicked, the onClick should sent a post request to the backend adding to the cart.
+// then in the shopping cart tab, you just show every item that is in the shopping cart. That way the two components don't have to talk
+
+
 const GridList = ({ ids, isLoading, data, currentSort, basePath, rowStyle }) => (
+
     <div style={styles.root}>
-        <MuiGridList cellHeight={180} cols={4} style={styles.gridList}>
-            {ids.map((id) => (
-                <GridTile
-                    key={id}
-                    title={data[id].reference}
-                    subtitle={<span>{data[id].width}x{data[id].height}, <b><NumberField source="price" record={data[id]} options={{ style: 'currency', currency: 'USD' }} /></b></span>}
-                    actionIcon={<EditButton basePath={basePath} record={data[id]} label="" />}
-                    titleBackground="linear-gradient(to top, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.4) 70%,rgba(0,0,0,0) 100%)"
-                >
-                    <img src={data[id].thumbnail} alt="" />
-                </GridTile>
-            ))}
-        </MuiGridList>
+        <div className="drink" id="1">
+            <div className="drinkHeader">
+                <div className="drinkTitle">Coffee</div>
+            </div>
+            <div className="drinkBody">
+                <div className="drinkIcon">
+                    <img src={coffee} width="200" height="200"/>
+                </div>
+            </div>
+            <Button 
+                onClick={
+                    function handleClick(){
+                        alert('hello');
+                    }
+                }
+            > 
+            Add to Cart </Button>
+        </div>
+
     </div>
 );
 

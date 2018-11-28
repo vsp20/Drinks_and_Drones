@@ -11,10 +11,10 @@ import { ProductIcon } from './products';
 import { CategoryIcon } from './categories';
 import { ReviewIcon } from './reviews';
 
+
 const items = [
     { name: 'products', icon: <ProductIcon /> },
     { name: 'categories', icon: <CategoryIcon /> },
-    
 ];
 
 const styles = {
@@ -25,6 +25,7 @@ const styles = {
         height: '100%',
     },
 };
+
 
 const Menu = ({ onMenuTap, translate, logout }) => (
     <div style={styles.main}>

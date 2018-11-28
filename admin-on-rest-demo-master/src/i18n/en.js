@@ -65,7 +65,7 @@ export default {
             },
         },
         products: {
-            name: 'Poster |||| Posters',
+            name: 'Product |||| Products',
             fields: {
                 category_id: 'Category',
                 height_gte: 'Min height',
