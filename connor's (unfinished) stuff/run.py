@@ -55,7 +55,7 @@ def sql_execute_return_new_id(sql):
 #    return render_template('home.html')
 
 @app.route('/', methods=['GET', 'POST'])
-def template_response_with_data():
+def response_with_data():
     
     print(request.form)
     if "add-to-cart" in request.form:
@@ -133,7 +133,8 @@ def template_response_with_data():
                     newamount = amount - prods[prod]
                     sql_execute(queries.update_ingreds_by_id)
 
-    elif "getallproducts" in request.form:
+    elif "get-all-products" in request.form:
+        # just spitting back all products for now
         return sql_execute(queries.get_all_products)
 
 if __name__ == '__main__':
