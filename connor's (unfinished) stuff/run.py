@@ -33,6 +33,8 @@ def sql_execute(sql):
     cursor.close()
     db.close()
 
+
+# intended to be used for when we add something new to the db and want to get the auto-incremented id back
 def sql_execute_return_new_id(sql):
     db = mysql.connector.connect(**config['mysql.connector'])
     cursor = db.cursor()
@@ -53,6 +55,7 @@ def response_with_data():
         customerID = str(request.form["customerID"])
         order = sql_query(queries.get_order_id)
         if order <= 0:
+            # if they don't currently have an order, make a new order for them
             order = sql_execute_return_new_id(queries.insert_into_order)
             sql_execute(queries.insert_into_purchased)
         sql_execute(queries.insert_into_includes)
@@ -68,10 +71,9 @@ def response_with_data():
         if order > 0:
             return "error: checking out without an order"
         else:
-            # check if its a valid purchase and stuff
             order_prods = sql_query(queries.get_order_products)
 
-            prods = {}
+            prods = {} # hold the products in the order and how many of them are wanted
 
             for row in order_prods:
                 prod_id = row[0]
@@ -80,21 +82,26 @@ def response_with_data():
                 else:
                     prods[prod_id] = 1
 
+            # check for avalibility of products in cart
             for prod in prods:
                 ingred_avalibilities = sql_execute_return_new_id(queries.get_product_availability_by_id)
                 for ingredrow in ingred_avalibilities:
                     avalibility = ingredrow[0]
                     if prods[prod] > avalibility:
                         return "error: there isn't enough of product id=" + str(prod_id)
+
             order_type = sql_query(queries.get_order_type)
             if order_type == 0:
-                # Delivery order. Need to deal with drones
+                # Delivery order. We need to deal with drones
                 drones = sql_query(queries.get_free_drones_and_capacities)
+
+                # fint the total weight of the order
                 weights = sql_query(queries.get_order_weights)
                 weight = 0
                 for row in weights:
                     weight += row[0]
 
+                # select a drone that is availible and can carry the order
                 sel_drone = None
                 for rows in drones:
                     drone_id = rows[0]
@@ -102,16 +109,20 @@ def response_with_data():
                     if weight <= drone_cap:
                         sel_drone = drone_id
                         break
+
                 if sel_drone is None:
                     return "error: No drones can take this order right now"
                 else:
                     sql_execute(queries.set_drone_to_busy)
                     sql_execute(queries.insert_into_delivers)
+
+                    # calculate the time to destination
                     time_to_dest = geopy.distance.vincenty((conf.store_lat, conf.store_long), (dest_lat, dest_long)).km * conf.drone_speed
-                    est_delivery_time = datetime.now() + timedelta(seconds=time_to_dest)
+                    est_delivery_time = datetime.now() + timedelta(seconds=(time_to_dest+conf.prep_time)) 
                     sql_execute(queries.update_dest_and_time)
             sql_execute(queries.set_order_to_purchased)
 
+            # update ingredient quantities based on what was just purchased
             for prod in prods:
                 ingred_ids_amnts = sql_query(queries.get_product_ingreds_id_and_amount)
                 for row in ingred_ids_amnts:
@@ -120,10 +131,10 @@ def response_with_data():
                     newamount = amount - prods[prod]
                     sql_execute(queries.update_ingreds_by_id)
             
+            # returns information from the order
             return sql_query(queries.get_all_from_order)
 
     elif "get-all-products" in request.form:
-        # just spitting back all products for now
         return sql_execute(queries.get_all_products)
 
 if __name__ == '__main__':
