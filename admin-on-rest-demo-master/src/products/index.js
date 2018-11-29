@@ -25,7 +25,8 @@ import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import StarRatingField from '../reviews/StarRatingField';
 import GridList from './GridList';
 import Poster from './Poster';
-import items from './items';
+import ProductGrid from './ProductGrid.js'
+
 
 export const ProductIcon = Icon;
 
@@ -47,7 +48,7 @@ export const ProductFilter = props => (
 
 export const ProductList = props => (
     <List {...props} filters={<ProductFilter />} perPage={20}>
-        <GridList />
+        <ProductGrid/>
     </List>
 );
 

@@ -6,6 +6,7 @@ import coffee from './coffee.png';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardActions } from 'material-ui/Card';
 import { Button } from 'react-bootstrap';
+import ShoppingCart from './ShoppingCart.js'
 
 const styles = {
     root: {
@@ -43,7 +44,9 @@ const GridList = ({ ids, isLoading, data, currentSort, basePath, rowStyle }) => 
             > 
             Add to Cart </Button>
         </div>
-
+        <div className="shoppingCart">
+            <ShoppingCart/>
+        </div>
     </div>
 );
 

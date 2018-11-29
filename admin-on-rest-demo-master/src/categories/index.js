@@ -22,9 +22,8 @@ export const CategoryIcon = Icon;
 export const CategoryList = (props) => (
     <List {...props} sort={{ field: 'name', order: 'ASC' }}>
         <Datagrid >
-            <TextField source="name" style={{ padding: '0 12px 0 25px' }} />
-            <LinkToRelatedProducts />
-            <EditButton />
+            <div> itemName </div>
+            <div> prices </div>
         </Datagrid>
     </List>
 );

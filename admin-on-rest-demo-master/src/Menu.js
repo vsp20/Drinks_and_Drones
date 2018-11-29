@@ -14,7 +14,6 @@ import { ReviewIcon } from './reviews';
 
 const items = [
     { name: 'products', icon: <ProductIcon /> },
-    { name: 'categories', icon: <CategoryIcon /> },
 ];
 
 const styles = {
