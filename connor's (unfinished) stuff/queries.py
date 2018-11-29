@@ -15,3 +15,4 @@ get_product_ingreds_id_and_amount = "select ID, amount from contains where produ
 update_ingreds_by_id = "update ingredient set amount={newamount} where ID={ingred_ID}"
 update_dest_and_time = "update order set order.destlong={dest_long}, order.destlat{dest_lat}, order.time={time_to_dest} where order.id={order}"
 get_all_products = "select * from product"
+get_all_from_order = "select * from order where order.id={order}"

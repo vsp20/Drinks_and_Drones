@@ -43,18 +43,7 @@ def sql_execute_return_new_id(sql):
     db.close()
     return id
 
-# For this example you can select a handler function by
-# uncommenting one of the @app.route decorators.
-
-@app.route('/')
-def basic_response():
-    return "response" #example
-
-#@app.route('/')
-#def template_response():
-#    return render_template('home.html')
-
-#@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def response_with_data():
     
     print(request.form)
@@ -68,8 +57,6 @@ def response_with_data():
             sql_execute(queries.insert_into_purchased)
         sql_execute(queries.insert_into_includes)
         cart = sql_query(queries.get_cart)
-        #template_data['shoppingcart'] = cart
-        #return render_template('viewcart.html', template_data=template_data)
         return cart
 
     elif "checkout" in request.form:
@@ -132,6 +119,8 @@ def response_with_data():
                     amount = row[1]
                     newamount = amount - prods[prod]
                     sql_execute(queries.update_ingreds_by_id)
+            
+            return sql_query(queries.get_all_from_order)
 
     elif "get-all-products" in request.form:
         # just spitting back all products for now
