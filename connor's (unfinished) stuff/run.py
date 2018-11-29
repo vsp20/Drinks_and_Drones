@@ -46,15 +46,15 @@ def sql_execute_return_new_id(sql):
 # For this example you can select a handler function by
 # uncommenting one of the @app.route decorators.
 
-#@app.route('/')
-#def basic_response():
-#    return "It works!" #example
+@app.route('/')
+def basic_response():
+    return "response" #example
 
 #@app.route('/')
 #def template_response():
 #    return render_template('home.html')
 
-@app.route('/', methods=['GET', 'POST'])
+#@app.route('/', methods=['GET', 'POST'])
 def response_with_data():
     
     print(request.form)
