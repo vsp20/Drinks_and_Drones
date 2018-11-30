@@ -15,7 +15,7 @@ class Item extends Component{
 		return (
 		<div className="drink" id={id}>
             <div className="drinkHeader">
-                <div className="drinkTitle">{name}</div>
+                <h4 className="drinkTitle">{name}</h4>
             </div>
             <div className="drinkBody">
                 <div className="drinkIcon">

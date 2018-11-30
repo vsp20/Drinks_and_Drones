@@ -70,6 +70,12 @@ const renderInput = ({ meta: { touched, error } = {}, input: { ...inputProps }, 
 
 class Login extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {username: '', password: ''}
+    }
+
+
     login = ({ username, password }) => {
         const { userLogin, location } = this.props;
         userLogin({ username, password }, location.state ? location.state.nextPathname : '/');
@@ -77,17 +83,35 @@ class Login extends Component {
 
     handleSubmitButton(){
         //add implementation for login check here
-        axios.get("http://127.0.0.1:35230/helloworld")
-            .then(res=> {
-                const data = res.data;
-                console.log(data);
+        const username = this.state.username;
+        const password = this.state.password;
+        var dataForm = new FormData();
+        dataForm.set('username', username);
+        dataForm.set('password', password);
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:35230',
+            data: dataForm
+
         })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (response) {
+            console.log(response);
+        });
         //handleSubmit(this.login)
 //      this.handleSubmitButton
     }
     handleCreateAccountClick(){
         //add implementation for POST here
         alert('handled create account')
+    }
+    handlePasswordChange(e){
+        this.setState({password: e.target.value});
+    }
+    handleUsernameChange(e){
+        this.setState({username: e.target.value});
     }
 
     render() {

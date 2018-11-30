@@ -38,7 +38,6 @@ export const ProductFilter = props => (
         <ReferenceInput source="category_id" reference="categories">
             <SelectInput source="name" />
         </ReferenceInput>
-        <NumberInput source="width_gte" />
         <NumberInput source="width_lte" />
         <NumberInput source="height_gte" />
         <NumberInput source="height_lte" />

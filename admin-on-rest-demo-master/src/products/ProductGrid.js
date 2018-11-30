@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Item from './Item.js'
-import { Button } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import coffee from './coffee.png';
 import axios from 'axios';
 import { propTypes, reduxForm, Field } from 'redux-form';
-
+import './productGrid.css'
 import TextField from 'material-ui/TextField';
 
 //Here we just have to use item as a component and input as many as we need.
@@ -61,7 +61,7 @@ class ProductGrid extends Component{
 	}
 
 	addToCart(id){
-		alert(id);
+		alert('Item added to cart');
 	}
 
 	renderItems(){
@@ -78,29 +78,38 @@ class ProductGrid extends Component{
 	}
 
 	render(){
-		const json = {"coffee":{"name":"coffee","id":"1"},"orange juice":{"name":"orange juice","id":"2"},"strawberry smoothie":{"name":"strawberry smoothie","id":"3"}};
 
 		return (
 			<div className="productGridContainer">
 				<div className="itemList">
 					<div className="testing">
 					{Object.keys(this.state.productList).map(item => 
-						<div>
-							<Item id={item.id} name={item} imgSrc={coffee}/>
-							<Button width="200" height="200" onClick={() => this.addToCart(1)}> Add to Cart </Button>
+						<div className="items">
+							<Item id={item.id} name={item} imgSrc={item.img}/>
+							<Button bsStyle="info" width="200" height="200" onClick={() => this.addToCart(1)}> Add to Cart </Button>
 						</div>
 					)}
 					</div>
 				</div>
 				<div className="shoppingCart">
-					<div className="title"> Shopping Cart </div>
+					<h3 className="title"> Shopping Cart </h3>
 					<div className="cartBody">
-						
 					</div>
 				</div>
 				<div className="address">
-					
-					<Button>Place Order</Button>
+					      <form>
+					        <FormGroup
+					          controlId="formBasicText"
+					        >
+					          <ControlLabel>Enter Delivery Address here</ControlLabel>
+					          <FormControl
+					            type="text"
+					            placeholder="1600 Pennsylvania Ave NW, Washington, DC 20500"
+					          />
+					          <FormControl.Feedback />
+					        </FormGroup>
+					      </form>
+					<Button bsStyle="info">Place Order</Button>
 				</div>
 			 </div>
 			);
