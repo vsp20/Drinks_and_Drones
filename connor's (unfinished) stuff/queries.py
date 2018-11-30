@@ -16,3 +16,8 @@ update_ingreds_by_id = "update ingredient set amount={newamount} where ID={ingre
 update_dest_and_time = "update order set order.destlong={dest_long}, order.destlat{dest_lat}, order.time={time_to_dest} where order.id={order}"
 get_all_products = "select product.id, product.name, product.price, product.calories, product.weight, allergen.name from product, contains, has, allergen where product.ID=contains.productID and contains.ingredientID=has.ingredientID and has.allergenID=allergen.ID"
 get_all_from_order = "select * from order where order.id={order}"
+get_customer_from_id_and_pswrd = "select ID, name, num_orders, DOB from customer where ID={cust_ID} and password={hashed_password}"
+get_customer_num_orders = "select num_orders from customer where ID={customerID}"
+update_num_orders = "update customer set num_orders={new_num_orders} where ID={customerID}"
+in_use_cust_id = "select 1 from customer where ID={customerID}"
+insert_into_customer = "insert into customer (ID, name, num_orders, DOB) values ({customerID}, {name}, 0, {dob})"

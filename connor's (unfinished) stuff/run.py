@@ -68,7 +68,7 @@ def response_with_data():
         dest_lat = float(request.form["destLatitude"])
         status = 0
         order = sql_query(queries.get_order_id)
-        if order > 0:
+        if order <= 0:
             return "error: checking out without an order"
         else:
             order_prods = sql_query(queries.get_order_products)
@@ -131,11 +131,39 @@ def response_with_data():
                     newamount = amount - prods[prod]
                     sql_execute(queries.update_ingreds_by_id)
             
+            # update customer's num_orders
+            new_num_orders = sql_query(queries.get_customer_num_orders)[0][0] + 1
+            sql_execute(queries.update_num_orders)
+
             # returns information from the order
             return sql_query(queries.get_all_from_order)
 
     elif "get-all-products" in request.form:
         return sql_execute(queries.get_all_products)
+    
+    elif "login" in request.form:
+        # return customer's information if they are in database
+        customerID = str(request.form["ID"])
+        hashed_password = str(request.form["password"])
+
+        cust_info = sql_execute_return_new_id(queries.get_customer_from_id_and_pswrd)
+        if cust_info <= 0:
+            return "username and password do not match"
+        return cust_info
+
+    elif "create-new-account" in request.form:
+        customerID = str(request.form["ID"])
+        name = str(request.form["name"])
+        dob = str(request.form["dob"])
+        hashed_password = str(request.form["password"])
+
+        id_taken = sql_execute(queries.in_use_cust_id)
+        if id_taken <= 0:
+            # if the id isn't already taken
+            sql_execute(queries.insert_into_customer)
+            return "success"
+        else:
+            return "error: ID already in use"
 
 if __name__ == '__main__':
     app.run(**config['app'])
