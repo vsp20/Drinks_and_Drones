@@ -109,7 +109,7 @@ def response_with_data():
                         return "error: there isn't enough of product id=" + str(prod_id)
 
             order_type = sql_query(queries.get_order_type)
-            if order_type == 0:
+            if order_type[0][0] == "delivery_order":
                 # Delivery order. We need to deal with drones
                 drones = sql_query(queries.get_free_drones_and_capacities)
 
