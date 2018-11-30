@@ -47,22 +47,16 @@ def sql_execute_return_new_id(sql):
     cursor.close()
     db.close()
     return id
-# For this example you can select a handler function by
-# uncommenting one of the @app.route decorators.
 
 
-
+# this is for the demo
 @app.route('/products', methods=['GET'])
 def getProducts():
     result = {"coffee":{"name":"coffee","id":"1"},"orange juice":{"name":"orange juice","id":"2"},"strawberry smoothie":{"name":"strawberry smoothie","id":"3"}}
     return json.dumps(result)
 
 
-#@app.route('/')
-#def template_response():
-#    return render_template('home.html')
-
-#@app.route('/', methods=['GET', 'POST'])
+# this is what should have been used had the connection to the db worked
 @app.route('/', methods=['GET', 'POST'])
 def response_with_data():
     
