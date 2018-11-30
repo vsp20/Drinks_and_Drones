@@ -12,9 +12,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import LockIcon from 'material-ui/svg-icons/action/lock-outline';
 import { cyan500, pinkA200 } from 'material-ui/styles/colors';
-
 import { Notification, translate, userLogin as userLoginAction } from 'admin-on-rest';
 
+import axios from 'axios';
+// http://127.0.0.1:35230/
 const styles = {
     main: {
         display: 'flex',
@@ -76,8 +77,13 @@ class Login extends Component {
 
     handleSubmitButton(){
         //add implementation for login check here
-        alert('handled submit');
-
+        axios.get("http://127.0.0.1:35230/helloworld")
+            .then(res=> {
+                const data = res.data;
+                console.log(data);
+        })
+        //handleSubmit(this.login)
+//      this.handleSubmitButton
     }
     handleCreateAccountClick(){
         //add implementation for POST here
@@ -95,6 +101,7 @@ class Login extends Component {
                         <div style={styles.avatar}>
                             <Avatar backgroundColor={accent1Color} icon={<LockIcon />} size={60} />
                         </div>
+
                         <form onSubmit={handleSubmit(this.login)}>
                             <div style={styles.form}>
                                 <p style={styles.hint}>Hint: demo / demo</p>

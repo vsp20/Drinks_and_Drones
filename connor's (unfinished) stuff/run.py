@@ -5,6 +5,8 @@ import queries
 import geopy.distance
 import conf
 from datetime import datetime, timedelta
+import json
+from flask_cors import CORS
 
 
 # Read configuration from file.
@@ -13,6 +15,7 @@ config.read('config.ini')
 
 # Set up application server.
 app = Flask(__name__)
+CORS(app)
 
 # Create a function for fetching data from the database.
 def sql_query(sql):
@@ -49,6 +52,13 @@ def sql_execute_return_new_id(sql):
 @app.route('/')
 def basic_response():
     return "response" #example
+
+
+@app.route('/products', methods=['GET'])
+def getProducts():
+    result = {"coffee":{"name":"coffee","id":"1"},"orange juice":{"name":"orange juice","id":"2"},"strawberry smoothie":{"name":"strawberry smoothie","id":"3"}}
+    return json.dumps(result)
+
 
 #@app.route('/')
 #def template_response():
