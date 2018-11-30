@@ -157,7 +157,7 @@ def response_with_data():
             return sql_query(queries.get_all_from_order)
 
     elif "get-all-products" in request.form:
-        return sql_execute(queries.get_all_products)
+        return sql_query(queries.get_all_products)
     
     elif "login" in request.form:
         # return customer's information if they are in database
@@ -175,7 +175,7 @@ def response_with_data():
         dob = str(request.form["dob"])
         hashed_password = str(request.form["password"])
 
-        id_taken = sql_execute(queries.in_use_cust_id)
+        id_taken = sql_query(queries.in_use_cust_id)
         if id_taken <= 0:
             # if the id isn't already taken
             sql_execute(queries.insert_into_customer)
